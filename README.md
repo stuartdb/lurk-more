@@ -1,6 +1,8 @@
 lurk-more
 ==============
 
+![lurk-more screenshot](https://github.com/stuartdb/lurk-more/raw/master/img/lurk-more-shot.png)
+
 A userscript for quickly opening your bookmarked threads which have new posts on the Something Awful forums. Adds a link on your usercp page.
 
 Installation
