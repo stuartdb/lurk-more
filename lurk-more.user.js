@@ -5,7 +5,7 @@
 // @author         	Stuart Baker
 // @description    	Allows quickly opening your bookmarked threads which have new posts on SA.
 // @include        	*://forums.somethingawful.com/usercp*
-// @grant   		none
+// @grant   		GM_openInTab
 // @downloadURL    	https://github.com/stuartdb/lurk-more/raw/master/lurk-more.user.js
 // @updateURL    	https://github.com/stuartdb/lurk-more/raw/master/lurk-more.meta.js
 // @run-at 			document-end
@@ -45,12 +45,10 @@ function createNewPostsElement(count, threads) {
 function openUnreadLinks() {
 	var newPosts = document.getElementsByClassName("count");
 
-	if (window.confirm("This may open quite a few new windows, are you sure?")){
-		for (var i = 0; i < newPosts.length; i++) {
-			link = "http://forums.somethingawful.com/" + newPosts[i].getAttribute("href");
-			window.open(link , "_blank");
-		};
-	}	
+	for (var i = 0; i < newPosts.length; i++) {
+		link = "http://forums.somethingawful.com/" + newPosts[i].getAttribute("href");
+		GM_openInTab(link);
+	};
 
 }
 
