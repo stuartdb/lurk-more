@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           	Lurk-More
-// @version        	0.1.2
+// @version        	0.1.3
 // @namespace      	https://github.com/stuartdb/lurk-more
 // @author         	Stuart Baker
 // @description    	Allows quickly opening your bookmarked threads which have new posts on SA.
