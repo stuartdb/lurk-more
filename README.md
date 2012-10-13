@@ -8,9 +8,7 @@ A userscript for quickly opening your bookmarked threads which have new posts on
 Installation
 ---------
 
-Firefox users need to have the [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) addon installed.
-
-Chrome users do not need any other addons installed.
+You will need to have the [Greasemonkey](https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/) addon installed.
 
 Navigate to the raw
 
