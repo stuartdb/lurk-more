@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name           	Lurk-More
-// @version        	0.1.3
+// @version        	0.1.4
 // @namespace      	https://github.com/stuartdb/lurk-more
 // @author         	Stuart Baker
 // @description    	Allows quickly opening your bookmarked threads which have new posts on SA.
@@ -46,7 +46,7 @@ function openUnreadLinks() {
 	var newPosts = document.getElementsByClassName("count");
 
 	for (var i = 0; i < newPosts.length; i++) {
-		link = "http://forums.somethingawful.com/" + newPosts[i].getAttribute("href");
+		link = "http://forums.somethingawful.com" + newPosts[i].getAttribute("href");
 		GM_openInTab(link);
 	};
 
