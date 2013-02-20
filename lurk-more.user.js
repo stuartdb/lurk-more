@@ -1,55 +1,61 @@
 // ==UserScript==
-// @name           	Lurk-More
-// @version        	0.1.4
-// @namespace      	https://github.com/stuartdb/lurk-more
-// @author         	Stuart Baker
-// @description    	Allows quickly opening your bookmarked threads which have new posts on SA.
-// @include        	*://forums.somethingawful.com/usercp*
-// @grant   		GM_openInTab
-// @downloadURL    	https://github.com/stuartdb/lurk-more/raw/master/lurk-more.user.js
-// @updateURL    	https://github.com/stuartdb/lurk-more/raw/master/lurk-more.meta.js
-// @run-at 			document-end
+// @name Lurk-More
+// @version 0.2.0
+// @namespace https://github.com/stuartdb/lurk-more
+// @author Stuart Baker
+// @description Opens all bookmarked threads with new posts in new tabs
+// @include *://forums.somethingawful.com/usercp*
+// @grant GM_openInTab
+// @downloadURL https://github.com/stuartdb/lurk-more/raw/master/lurk-more.user.js
+// @updateURL https://github.com/stuartdb/lurk-more/raw/master/lurk-more.meta.js
+// @run-at document-end
 // ==/UserScript==
 
-function calulateNewPosts() {
-	var newPosts = document.getElementsByClassName("count");
+function calculateNewPosts() {
+    var newPosts = document.getElementsByClassName("count");
 
-	var postCount = 0;
+    var postCount = 0;
 
-	for (var i = 0; i < newPosts.length; i++) {
-	 	postCount += parseInt(newPosts[i].text, 10);
-	};
+    for (var i = 0; i < newPosts.length; i++) {
+        postCount += parseInt(newPosts[i].text, 10);
+    }
 
-	linkElement = createNewPostsElement(postCount, newPosts.length);
+    newh2 = createNewHeader(postCount, newPosts.length);
 
-	editButton = document.getElementById("bookmark_edit_attach");
-	editButton.parentNode.insertBefore(linkElement, editButton);
+
+    bookmarks = document.getElementsByClassName("standard bookmarked_threads");
+    bookmarks = bookmarks[0];
+    oldh2 = bookmarks.firstElementChild;
+    bookmarks.replaceChild(newh2, oldh2);
+
 }
 
-function createNewPostsElement(count, threads) {
+function createNewHeader(count, threads) {
 
-	e = document.createElement("em");
-	e.textContent = ("There are " + count + " new posts in " + threads + " threads. ");
-	
-	a = document.createElement("a");
-	a.setAttribute("href", "#");
-	a.addEventListener("click", openUnreadLinks, true);
-	a.textContent = ("Click here to view.");
+    e = document.createElement("h2");
+    e.textContent = ("Bookmarked Threads | " + count +
+                     " New Posts In " + threads + " Threads | ");
 
-	e.appendChild(a);
+    a = document.createElement("a");
+    a.setAttribute("href", "#");
+    a.addEventListener("click", openUnreadLinks, true);
+    a.textContent = ("View All New Posts");
 
-	return e;
+    e.appendChild(a);
+
+    return e;
 }
 
 
 function openUnreadLinks() {
-	var newPosts = document.getElementsByClassName("count");
+    var newPosts = document.getElementsByClassName("count");
 
-	for (var i = 0; i < newPosts.length; i++) {
-		link = "http://forums.somethingawful.com" + newPosts[i].getAttribute("href");
-		GM_openInTab(link);
-	};
+    for (var i = 0; i < newPosts.length; i++) {
+        link = "http://forums.somethingawful.com" +
+            newPosts[i].getAttribute("href");
+        GM_openInTab(link);
+    }
 
 }
 
-calulateNewPosts();
+calculateNewPosts();
