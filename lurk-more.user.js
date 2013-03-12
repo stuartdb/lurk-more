@@ -53,7 +53,17 @@ function openUnreadLinks() {
     for (var i = 0; i < newPosts.length; i++) {
         link = "http://forums.somethingawful.com" +
             newPosts[i].getAttribute("href");
-        GM_openInTab(link);
+
+        // A lttle hack to check if the browser is dwb
+        // dwb implements userscripts but GM_openInTab is currently not
+        // supported. Checking userAgent usually isn't a good idea but
+        // dwb is obscure enough that I doubt any browser bothers to spoof
+        // it's userAgent to include it.
+        if (navigator.userAgent.search("dwb") != -1) {
+            window.open(link);
+        } else  {
+            GM_openInTab(link);
+        }
     }
 
 }
