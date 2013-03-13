@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name Lurk-More
-// @version 0.2.0
+// @version 0.3.0
 // @namespace https://github.com/stuartdb/lurk-more
 // @author Stuart Baker
 // @description Opens all bookmarked threads with new posts in new tabs
@@ -11,61 +11,72 @@
 // @run-at document-end
 // ==/UserScript==
 
-function calculateNewPosts() {
-    var newPosts = document.getElementsByClassName("count");
-
-    var postCount = 0;
-
-    for (var i = 0; i < newPosts.length; i++) {
-        postCount += parseInt(newPosts[i].text, 10);
-    }
-
-    newh2 = createNewHeader(postCount, newPosts.length);
-
-
-    bookmarks = document.getElementsByClassName("standard bookmarked_threads");
-    bookmarks = bookmarks[0];
-    oldh2 = bookmarks.firstElementChild;
-    bookmarks.replaceChild(newh2, oldh2);
-
+function get_count_elements() {
+    "use strict";
+    return document.getElementsByClassName("count");
 }
 
-function createNewHeader(count, threads) {
+function open_unread_threads() {
+    "use strict";
+    var i = 0,
+        link_base = "http://forums.somethingawful.com",
+        link = "",
+        count_elements;
 
-    e = document.createElement("h2");
-    e.textContent = ("Bookmarked Threads | " + count +
-                     " New Posts In " + threads + " Threads | ");
+    count_elements = get_count_elements();
 
-    a = document.createElement("a");
-    a.setAttribute("href", "#");
-    a.addEventListener("click", openUnreadLinks, true);
-    a.textContent = ("View All New Posts");
-
-    e.appendChild(a);
-
-    return e;
-}
-
-
-function openUnreadLinks() {
-    var newPosts = document.getElementsByClassName("count");
-
-    for (var i = 0; i < newPosts.length; i++) {
-        link = "http://forums.somethingawful.com" +
-            newPosts[i].getAttribute("href");
+    for (i = 0; i < count_elements.length; i = i + 1) {
+        link = link_base + count_elements[i].getAttribute("href");
 
         // A lttle hack to check if the browser is dwb
         // dwb implements userscripts but GM_openInTab is currently not
         // supported. Checking userAgent usually isn't a good idea but
         // dwb is obscure enough that I doubt any browser bothers to spoof
         // it's userAgent to include it.
-        if (navigator.userAgent.search("dwb") != -1) {
+        if (navigator.userAgent.search("dwb") !== -1) {
             window.open(link);
-        } else  {
+        } else {
             GM_openInTab(link);
         }
     }
-
 }
 
-calculateNewPosts();
+
+function create_header(post_count, thread_count) {
+    "use strict";
+    var h2 = document.createElement("h2"),
+        a = document.createElement("a");
+
+    h2.textContent = ("Bookmarked Threads | " +
+                      post_count + " New Posts In " +
+                      thread_count + " Threads | ");
+
+    a.setAttribute("href", "#");
+    a.addEventListener("click", open_unread_threads, true);
+    a.textContent = ("View All New Posts");
+    h2.appendChild(a);
+    return h2;
+}
+
+function insert_count_header() {
+    "use strict";
+    var i = 0,
+        post_count = 0,
+        count_elements,
+        new_header,
+        old_header,
+        bookmarks;
+
+    count_elements = get_count_elements();
+    bookmarks = document.getElementsByClassName("standard bookmarked_threads");
+
+    for (i = 0; i < count_elements.length; i = i + 1) {
+        post_count += parseInt(count_elements[i].text, 10);
+    }
+
+    new_header = create_header(post_count, count_elements.length);
+    old_header = bookmarks[0].firstElementChild;
+    bookmarks[0].replaceChild(new_header, old_header);
+}
+
+insert_count_header();
