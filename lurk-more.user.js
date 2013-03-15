@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name Lurk-More
-// @version 0.3.0
+// @version 1.0.0
 // @namespace https://github.com/stuartdb/lurk-more
 // @author Stuart Baker
 // @description Opens all bookmarked threads with new posts in new tabs
@@ -27,20 +27,9 @@ function open_unread_threads() {
 
     for (i = 0; i < count_elements.length; i = i + 1) {
         link = link_base + count_elements[i].getAttribute("href");
-
-        // A lttle hack to check if the browser is dwb
-        // dwb implements userscripts but GM_openInTab is currently not
-        // supported. Checking userAgent usually isn't a good idea but
-        // dwb is obscure enough that I doubt any browser bothers to spoof
-        // it's userAgent to include it.
-        if (navigator.userAgent.search("dwb") !== -1) {
-            window.open(link);
-        } else {
-            GM_openInTab(link);
-        }
+        GM_openInTab(link);
     }
 }
-
 
 function create_header(post_count, thread_count) {
     "use strict";
