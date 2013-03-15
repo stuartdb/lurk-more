@@ -12,18 +12,6 @@ You will need to have the [Greasemonkey](https://addons.mozilla.org/en-US/firefo
 
 Navigate to the raw ```/lurk-more.user.js``` file in this repository or [click here](https://github.com/stuartdb/lurk-more/raw/master/lurk-more.user.js) and it should install the script.
 
-If you happen to be using the browser [dwb](http://portix.bitbucket.org/dwb/), then copy the ```lurk-more.user.js``` script into ```~/.config/dwb/scripts/``` directory and restart. You will need to have the following settings set:
-
-```enable-scripts``` to ```true```
-
-```javascript-can-open-windows-automatically``` to ```true```
-
-I also recommend the following settings:
-
-```tabbed-browsing``` to ```true```
-
-```background-tabs``` to ```true```
-
 License
 -------
 
