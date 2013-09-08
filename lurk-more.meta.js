@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name Lurk-More
-// @version 1.0.0
+// @version 1.1.0
 // @namespace https://github.com/stuartdb/lurk-more
 // @author Stuart Baker
 // @description Opens all bookmarked threads with new posts in new tabs

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name Lurk-More
-// @version 1.0.0
+// @version 1.1.0
 // @namespace https://github.com/stuartdb/lurk-more
 // @author Stuart Baker
 // @description Opens all bookmarked threads with new posts in new tabs
@@ -68,4 +68,13 @@ function insert_count_header() {
     bookmarks[0].replaceChild(new_header, old_header);
 }
 
+function remove_buddy_list() {
+    "use strict";
+    var buddy_list;
+
+    buddy_list = document.getElementById("buddylist");
+    buddy_list.parentNode.removeChild(buddy_list);
+}
+
+remove_buddy_list();
 insert_count_header();
